@@ -6,7 +6,7 @@
 /*   By: bvaujour <bvaujour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 11:08:29 by bvaujour          #+#    #+#             */
-/*   Updated: 2023/05/19 16:42:18 by bvaujour         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:07:17 by bvaujour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,17 @@ int	begin(t_data *data)
 	i = -1;
 	data->t0 = get_time(0);
 	while (++i < data->rules.numphil)
+	{
 		if (pthread_create(&data->p[i], NULL, &life, &data->philo[i]))
+		{
+			while (i <= 0)
+			{
+				pthread_join(data->p[i], NULL);
+				i--;
+			}
 			return (1);
+		}
+	}
 	dead(data);
 	i = -1;
 	while (++i < data->rules.numphil)
@@ -53,6 +62,14 @@ int	check_arg(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 		return (1);
+	if (ft_atol(argv[1]) <= 0 || ft_atol(argv[1]) >= 200)
+		return (1);
+	if (ft_atol(argv[2]) > IMAX || ft_atol(argv[3]) > IMAX
+		|| ft_atol(argv[4]) > IMAX)
+		return (1);
+	if (ft_atol(argv[2]) < 60 || ft_atol(argv[3]) < 60
+		|| ft_atol(argv[4]) < 60)
+		return (1);
 	while (argc > 1)
 	{
 		i = 0;
@@ -75,6 +92,8 @@ int	main(int argc, char **argv)
 	data.dead = 0;
 	if (check_arg(argc, argv))
 		return (printf("Problem with args\n"));
+	if (argv[5] && ft_atol(argv[5]) == 0)
+		return (0);
 	error = 0;
 	error = init(&data, argv);
 	if (error)

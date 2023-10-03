@@ -6,7 +6,7 @@
 /*   By: bvaujour <bvaujour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 11:02:14 by bvaujour          #+#    #+#             */
-/*   Updated: 2023/05/19 14:55:03 by bvaujour         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:27:12 by bvaujour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	odd(t_philo *philo)
 		pthread_mutex_lock(&philo->data->write);
 		print_meal(philo);
 		pthread_mutex_unlock(&philo->data->write);
-		ft_usleep(philo->data, philo->rules.time_to_eat);
+		ft_usleep(philo, philo->rules.time_to_eat);
 		pthread_mutex_lock(&philo->data->race);
 		philo->num_of_eat--;
 		pthread_mutex_unlock(&philo->data->race);
@@ -51,7 +51,7 @@ void	eat(t_philo *philo)
 			pthread_mutex_lock(&philo->data->write);
 			print_meal(philo);
 			pthread_mutex_unlock(&philo->data->write);
-			ft_usleep(philo->data, philo->rules.time_to_eat);
+			ft_usleep(philo, philo->rules.time_to_eat);
 			pthread_mutex_lock(&philo->data->race);
 			philo->num_of_eat--;
 			pthread_mutex_unlock(&philo->data->race);
@@ -69,7 +69,7 @@ void	*life(void *valise)
 	t_philo	*philo;
 
 	philo = (t_philo *) valise;
-	if (philo->id % 2)
+	if (philo->id % 2 && philo->rules.numphil > 1)
 		usleep(philo->rules.time_to_eat);
 	while (1)
 	{
@@ -78,12 +78,12 @@ void	*life(void *valise)
 		if (!check(philo->data, philo) && philo->rules.numphil > 1)
 			printf("%ld %d is sleeping\n", get_time(philo->data->t0), philo->id);
 		pthread_mutex_unlock(&philo->data->write);
-		ft_usleep(philo->data, philo->rules.time_to_sleep);
+		ft_usleep(philo, philo->rules.time_to_sleep);
 		pthread_mutex_lock(&philo->data->write);
 		if (!check(philo->data, philo) && philo->rules.numphil > 1)
 			printf("%ld %d is thinking\n", get_time(philo->data->t0), philo->id);
 		pthread_mutex_unlock(&philo->data->write);
-		ft_usleep(philo->data, philo->rules.time_to_think);
+		ft_usleep(philo, philo->rules.time_to_think);
 		if (check(philo->data, philo))
 			return ((void *) 0);
 	}

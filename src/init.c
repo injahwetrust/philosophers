@@ -6,7 +6,7 @@
 /*   By: bvaujour <bvaujour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 10:49:26 by bvaujour          #+#    #+#             */
-/*   Updated: 2023/05/19 16:19:31 by bvaujour         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:54:56 by bvaujour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int	init(t_data *data, char **argv)
 	t_rules	rules;
 
 	i = -1;
-	rules.numphil = ft_atoi(argv[1]);
-	rules.time_to_die = ft_atoi(argv[2]);
-	rules.time_to_eat = ft_atoi(argv[3]);
-	rules.time_to_sleep = ft_atoi(argv[4]);
+	rules.numphil = ft_atol(argv[1]);
+	rules.time_to_die = ft_atol(argv[2]);
+	rules.time_to_eat = ft_atol(argv[3]);
+	rules.time_to_sleep = ft_atol(argv[4]);
 	rules.time_to_think = (rules.time_to_die
 			- rules.time_to_eat - rules.time_to_sleep) - 30;
 	data->rules = rules;
@@ -63,7 +63,7 @@ int	init(t_data *data, char **argv)
 		data->philo[i].last_meal = 0;
 		data->philo[i].rules = rules;
 		if (argv[5])
-			data->philo[i].num_of_eat = ft_atoi(argv[5]);
+			data->philo[i].num_of_eat = ft_atol(argv[5]);
 		else
 			data->philo[i].num_of_eat = -1;
 	}

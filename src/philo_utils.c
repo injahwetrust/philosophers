@@ -6,17 +6,17 @@
 /*   By: bvaujour <bvaujour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 10:57:48 by bvaujour          #+#    #+#             */
-/*   Updated: 2023/05/19 14:57:02 by bvaujour         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:25:57 by bvaujour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	ft_atoi(const char *nptr)
+int	ft_atol(const char *nptr)
 {
-	int	i;
-	int	sign;
-	int	nb;
+	int		i;
+	long	sign;
+	long	nb;
 
 	i = 0;
 	sign = 1;
@@ -45,16 +45,20 @@ long	get_time(long t0)
 	return (tv.tv_usec / 1000 + tv.tv_sec * 1000 - t0);
 }
 
-void	ft_usleep(t_data *data, long time)
+void	ft_usleep(t_philo *philo, long time)
 {
 	long	begin;
 	long	now;
+	long	seq;
 
+	seq = 0;
+	while (seq <= 1 && seq >= 5000)
+		seq = time / 2;
 	begin = get_time(0);
 	now = begin;
-	while (!check(data, &data->philo[0]) && (now - begin) < time)
+	while (!check(philo->data, philo) && (now - begin) < time)
 	{
-		usleep(100);
+		usleep(seq);
 		now = get_time(0);
 	}
 }

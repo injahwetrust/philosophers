@@ -6,7 +6,7 @@
 /*   By: bvaujour <bvaujour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 10:52:12 by bvaujour          #+#    #+#             */
-/*   Updated: 2023/05/25 16:02:06 by bvaujour         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:26:15 by bvaujour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <errno.h>
+
+# define IMIN	-2147483648
+# define IMAX	2147483647
 
 struct	s_data;
 
@@ -57,9 +60,9 @@ void	*life(void *valise);
 long	get_time(long t0);
 int		init(t_data *data, char **argv);
 void	dead(t_data *data);
-int		ft_atoi(const char *nptr);
+int		ft_atol(const char *nptr);
 void	printf_meal(t_philo *philo);
-void	ft_usleep(t_data *data, long time);
+void	ft_usleep(t_philo *philo, long time);
 void	print_meal(t_philo *philo);
 int		check(t_data *data, t_philo *philo);
 

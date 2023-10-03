@@ -6,17 +6,17 @@
 /*   By: bvaujour <bvaujour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 13:50:43 by injah             #+#    #+#             */
-/*   Updated: 2023/05/25 17:15:21 by bvaujour         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:46:29 by bvaujour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo_bonus.h"
 
-int	ft_atoi(const char *nptr)
+long	ft_atol(const char *nptr)
 {
-	int	i;
-	int	sign;
-	int	nb;
+	int		i;
+	long	sign;
+	long	nb;
 
 	i = 0;
 	sign = 1;
@@ -37,7 +37,7 @@ int	ft_atoi(const char *nptr)
 	return (sign * nb);
 }
 
-void	init_sem(t_data *data)
+static void	init_sem(t_data *data)
 {
 	sem_unlink("/sema7");
 	sem_unlink("/forks");
@@ -53,7 +53,7 @@ void	init_sem(t_data *data)
 	data->forks = sem_open("/forks", O_CREAT, 0644, data->numphil);
 }
 
-void	init_flat(t_data *data)
+static void	init_flat(t_data *data)
 {
 	data->time_to_think = data->time_to_die - data->time_to_eat
 		- data->time_to_sleep - 40;
@@ -67,12 +67,12 @@ void	init_flat(t_data *data)
 
 int	init_data(t_data *data, int ac, char **av)
 {
-	data->numphil = ft_atoi(av[1]);
-	data->time_to_die = ft_atoi(av[2]);
-	data->time_to_eat = ft_atoi(av[3]);
-	data->time_to_sleep = ft_atoi(av[4]);
-	if (ac == 6)
-		data->number_of_meal = atoi(av[5]);
+	data->numphil = ft_atol(av[1]);
+	data->time_to_die = ft_atol(av[2]);
+	data->time_to_eat = ft_atol(av[3]);
+	data->time_to_sleep = ft_atol(av[4]);
+	if (ac == 6 && ft_atol(av[5]) > 0)
+		data->number_of_meal = ft_atol(av[5]);
 	else
 		data->number_of_meal = -1;
 	data->pids = malloc(sizeof(pid_t) * data->numphil);

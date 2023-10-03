@@ -6,7 +6,7 @@
 /*   By: bvaujour <bvaujour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 13:51:28 by injah             #+#    #+#             */
-/*   Updated: 2023/05/25 16:14:40 by bvaujour         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:17:36 by bvaujour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@
 # include <sys/wait.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+# define BLACK	"\033[30m"
+# define RED	"\033[31m"
+# define GREEN	"\033[32m"
+# define BLUE	"\033[34m"
+# define WHITE	"\033[37m"
+# define YELLOW	"\033[33m"
+# define IMIN	-2147483648
+# define IMAX	2147483647
 
 typedef struct s_data
 {
@@ -58,5 +67,10 @@ long	get_time(void);
 long	time_lapse(long t0);
 void	ft_usleep(t_data *data, long time);
 void	check(t_data *data);
+void	release_sem(t_data *data);
+void	end2(t_data *data);
+int		table(t_data *data);
+int		taggle(t_data *data, long lapse);
+long	ft_atol(const char *nptr);
 
 #endif
